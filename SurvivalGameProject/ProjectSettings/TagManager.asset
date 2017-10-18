@@ -8,6 +8,7 @@ TagManager:
   - DisableController
   - SleepController
   - TimeController
+  - RainParent
   layers:
   - Default
   - TransparentFX
