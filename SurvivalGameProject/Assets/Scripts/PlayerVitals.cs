@@ -120,7 +120,6 @@ public class PlayerVitals : MonoBehaviour
         #region Vital Controllers
 
         #region Fatigue Controller
-        currentFatigue = fatigueSlider.value;
         float fatigueMultiplier = normFatigue / (fatigueSlider.value + 1);
         if (fatigueMultiplier >= 4)
         {
@@ -151,6 +150,8 @@ public class PlayerVitals : MonoBehaviour
         {
             fatigueSlider.value = maxFatigue;
         }
+
+        currentFatigue = fatigueSlider.value;
         #endregion
 
         #region Temperature Controller
@@ -190,18 +191,17 @@ public class PlayerVitals : MonoBehaviour
         #endregion
 
         #region Health Controller
-        currentHealth = healthSlider.value;
-
         healthSlider.value -= (effectMultiplier * effectMultiplier) * Time.deltaTime;
 
         if (healthSlider.value <= 0)
         {
             CharacterDeath();
         }
+
+        currentHealth = healthSlider.value;
         #endregion
 
         #region Hunger Controller
-        currentHunger = hungerSlider.value;
         if (hungerSlider.value > 0)
         {
             hungerSlider.value -= Time.deltaTime * hungerFallRate * fatigueMultiplier;
@@ -226,10 +226,10 @@ public class PlayerVitals : MonoBehaviour
         {
             hungerSlider.value = maxHunger;
         }
+        currentHunger = hungerSlider.value;
         #endregion 
 
         #region Thirst Controller
-        currentThirst = thirstSlider.value;
         if (thirstSlider.value > 0)
         {
             thirstSlider.value -= Time.deltaTime * thirstFallRate * fatigueMultiplier;
@@ -255,17 +255,17 @@ public class PlayerVitals : MonoBehaviour
         {
             thirstSlider.value = maxThirst;
         }
+        currentThirst = thirstSlider.value;
         #endregion 
 
         #region Stamina Controller
-        currentStamina = staminaSlider.value;
-
         #region IsOperators
         if (staminaSlider.value > 0)
         {
             if (isExhausted)
             {
                 isExhausted = false;
+                effectMultiplier--;
             }
             playerController.m_RunSpeed = playerController.m_RunSpeedNorm;
         }
@@ -275,6 +275,7 @@ public class PlayerVitals : MonoBehaviour
             if (!isExhausted)
             {
                 isExhausted = true;
+                effectMultiplier++;
             }
             staminaSlider.value = 0;
             playerController.m_RunSpeed = playerController.m_ExhaustedSpeed;
@@ -316,13 +317,13 @@ public class PlayerVitals : MonoBehaviour
         if (isRunning || isExhaustedRunning)
         {
             staminaSlider.value -= Time.deltaTime / staminaFallRate * staminaFallMultiplier * (fatigueMultiplier / 2);
-            currentTemp += Time.deltaTime / 5;
+            currentTemp += Time.deltaTime / 30;
         }
 
         else if (isWalking)
         {
             staminaSlider.value -= Time.deltaTime / staminaRegainRate * staminaRegainMultiplier * (fatigueMultiplier / 4);
-            currentTemp += Time.deltaTime / 10;
+            currentTemp += Time.deltaTime / 60;
         }
 
         else if (isStandingStill)
@@ -331,10 +332,10 @@ public class PlayerVitals : MonoBehaviour
 
             if (currentTemp >= normalTemp)
             {
-                currentTemp -= Time.deltaTime / 10;
+                currentTemp -= Time.deltaTime / 40;
             }
         }
-
+        currentStamina = staminaSlider.value;
         #endregion
 
         #endregion
