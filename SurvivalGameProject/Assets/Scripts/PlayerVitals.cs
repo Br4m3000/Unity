@@ -72,6 +72,9 @@ public class PlayerVitals : MonoBehaviour
     public float currentThirst;
     public float currentStamina;
     public string currentMovementSpeed;
+
+    [Space(10)]
+    public bool allowDeath;
     #endregion
 
     #region Controllers
@@ -193,7 +196,7 @@ public class PlayerVitals : MonoBehaviour
         #region Health Controller
         healthSlider.value -= (effectMultiplier * effectMultiplier) * Time.deltaTime;
 
-        if (healthSlider.value <= 0)
+        if (healthSlider.value <= 0 && allowDeath)
         {
             CharacterDeath();
         }
