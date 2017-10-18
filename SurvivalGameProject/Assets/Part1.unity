@@ -2599,7 +2599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sleepUI: {fileID: 26949745}
-  crosshair: {fileID: 0}
+  crosshair: {fileID: 1051459250}
   sleepSlider: {fileID: 1594942322}
   sleepNumber: {fileID: 1445076350}
   hourlyRegen: 1

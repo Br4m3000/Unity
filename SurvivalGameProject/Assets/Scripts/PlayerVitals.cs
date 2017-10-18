@@ -122,12 +122,12 @@ public class PlayerVitals : MonoBehaviour
         #region Fatigue Controller
         currentFatigue = fatigueSlider.value;
         float fatigueMultiplier = normFatigue / (fatigueSlider.value + 1);
-        if (fatigueMultiplier >= 10)
+        if (fatigueMultiplier >= 4)
         {
             fatigueMultiplier = 4;
         }
 
-        else if (fatigueSlider.value > 0)
+        if (fatigueSlider.value > 0)
         {
             fatigueSlider.value -= Time.deltaTime * fatigueFallRate;
             if (isTired)
@@ -137,7 +137,7 @@ public class PlayerVitals : MonoBehaviour
             }
         }
 
-        if (fatigueSlider.value <= 0)
+        else if (fatigueSlider.value <= 0)
         {
             fatigueSlider.value = 0;
             if (!isTired)
