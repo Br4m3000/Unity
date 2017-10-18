@@ -6624,6 +6624,7 @@ MonoBehaviour:
   currentThirst: 0
   currentStamina: 0
   currentMovementSpeed: 
+  allowDeath: 0
 --- !u!1001 &1184980982
 Prefab:
   m_ObjectHideFlags: 0
