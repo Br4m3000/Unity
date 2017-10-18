@@ -14,11 +14,19 @@ public class WeatherController : MonoBehaviour {
     [Header("Debugging")]
     public bool isRaining;
 
+    [Space(10)]
+    [Header("Buttons")]
     public bool startRain; //Button to start rain
     public bool stopRain;
 
+    void Start()
+    {
+        isRaining = false;
+    }
+
     void Update()
     {
+        #region Button Controller
         if (startRain)
         {
             StartRain();
@@ -30,12 +38,9 @@ public class WeatherController : MonoBehaviour {
             StopRain();
             stopRain = false;
         }
+        #endregion 
     }
-
-    void Start () {
-        isRaining = false;
-	}
-
+    
     public void StartRain()
     {     
         if(!isRaining && allowRain)
@@ -43,8 +48,7 @@ public class WeatherController : MonoBehaviour {
             Debug.Log("Start rain");
             Instantiate(rain);
             isRaining = true;
-        }
-        
+        }        
     }
 
     public void StopRain()
