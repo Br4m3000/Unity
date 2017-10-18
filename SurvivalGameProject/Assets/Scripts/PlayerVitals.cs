@@ -4,12 +4,13 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerVitals : MonoBehaviour
 {
-    #region Slider Variables
+    #region Settings
     [Space(10)]
     [Header("Health Settings")]
     public Slider healthSlider;
     public int maxHealth;
     public int healthFallRate;
+    public int effectMultiplier;
 
     [Space(10)]
     [Header("Thirst Settings")]
@@ -43,16 +44,41 @@ public class PlayerVitals : MonoBehaviour
     [Space(10)]
     [Header("Temperature Settings")]
     public float freezingTemp;
-    public float currentTemp;
     public float normalTemp;
     public float heatTemp;
     public Text tempNumber;
     public Image tempBG;
     #endregion
 
+    #region Debugging
+    [Space(10)]
+    [Header("Debugging")]
+    public bool isTired;
+    public bool isStarving;
+    public bool isDehydrated;
+    public bool isOverheating;
+    public bool isFreezing;
+    public bool isExhausted;
+    public bool isRunning;
+    public bool isStandingStill;
+    public bool isWalking;
+    public bool isExhaustedRunning;
+
+    [Space(10)]
+    public float currentTemp;
+    public float currentFatigue;
+    public float currentHealth;
+    public float currentHunger;
+    public float currentThirst;
+    public float currentStamina;
+    public string currentMovementSpeed;
+    #endregion
+
+    #region Controllers
     private CharacterController characterController;
     private FirstPersonController playerController;
-    
+    #endregion
+
     void Start()
     {
         #region Slider Default Setup
@@ -61,6 +87,7 @@ public class PlayerVitals : MonoBehaviour
 
         healthSlider.maxValue = maxHealth;
         healthSlider.value = maxHealth;
+        effectMultiplier = 0;
 
         thirstSlider.maxValue = maxThirst;
         thirstSlider.value = maxThirst;
@@ -72,35 +99,52 @@ public class PlayerVitals : MonoBehaviour
         staminaSlider.value = normMaxStamina;
         #endregion
 
+        #region Debugging Values
+        currentFatigue = fatigueSlider.value;
+        currentHealth = healthSlider.value;
+        currentHunger = hungerSlider.value;
+        currentThirst = thirstSlider.value;
+        currentStamina = staminaSlider.value;
+        #endregion
+
+        #region Controllers
         characterController = GetComponent<CharacterController>();
         playerController = GetComponent<FirstPersonController>();
+        #endregion Controllers
+
+        currentMovementSpeed = characterController.velocity.magnitude.ToString("0");
     }
 
     void FixedUpdate()
     {
-    }
-
-    void Update()
-    {
-        Debug.Log("Update:" + Time.deltaTime);
-
         #region Vital Controllers
-        
+
         #region Fatigue Controller
+        currentFatigue = fatigueSlider.value;
         float fatigueMultiplier = normFatigue / (fatigueSlider.value + 1);
         if (fatigueMultiplier >= 10)
         {
             fatigueMultiplier = 4;
         }
 
-        if (fatigueSlider.value >= 0)
+        else if (fatigueSlider.value > 0)
         {
             fatigueSlider.value -= Time.deltaTime * fatigueFallRate;
+            if (isTired)
+            {
+                isTired = false;
+                effectMultiplier--;
+            }
         }
 
-        else if (fatigueSlider.value <= 0)
+        if (fatigueSlider.value <= 0)
         {
             fatigueSlider.value = 0;
+            if (!isTired)
+            {
+                isTired = true;
+                effectMultiplier++;
+            }
         }
 
         else if (fatigueSlider.value >= maxFatigue)
@@ -110,81 +154,101 @@ public class PlayerVitals : MonoBehaviour
         #endregion
 
         #region Temperature Controller
-        if (currentTemp <= freezingTemp){
+        if (currentTemp <= freezingTemp)
+        {
             tempBG.color = Color.blue;
-            UpdateTemp();
+
+            if (!isFreezing)
+            {
+                isFreezing = true;
+                effectMultiplier++;
+            }
         }
 
-        else if(currentTemp >= heatTemp - 0.1){
+        else if (currentTemp >= heatTemp - 0.1)
+        {
             tempBG.color = Color.red;
-            UpdateTemp();
+
+            if (!isOverheating)
+            {
+                isOverheating = true;
+                effectMultiplier++;
+            }
         }
 
         else
         {
             tempBG.color = Color.green;
-            UpdateTemp();
+
+            if (isFreezing || isOverheating)
+            {
+                isOverheating = false;
+                isFreezing = false;
+                effectMultiplier--;
+            }
         }
         #endregion
 
         #region Health Controller
-        if(hungerSlider.value <= 0 && thirstSlider.value <= 0)
-        {
-            healthSlider.value -= Time.deltaTime / healthFallRate * 3;
-        }
+        currentHealth = healthSlider.value;
 
-        else if (hungerSlider.value <= 0 && thirstSlider.value <= 0 && (currentTemp <= freezingTemp || currentTemp >= heatTemp))
-        {
-            healthSlider.value -= Time.deltaTime / healthFallRate * 5;
-        }
+        healthSlider.value -= (effectMultiplier * effectMultiplier) * Time.deltaTime;
 
-        else if (hungerSlider.value <= 0 && thirstSlider.value <= 0 && (currentTemp <= freezingTemp || currentTemp >= heatTemp) && fatigueSlider.value <= 0)
-        {
-            healthSlider.value -= Time.deltaTime / healthFallRate * 10;
-        }
-
-        else if ((currentTemp <= freezingTemp || currentTemp >= heatTemp) && staminaSlider.value <= 0)
-        {
-            healthSlider.value -= Time.deltaTime / healthFallRate * 20;
-        }
-
-        else if (hungerSlider.value <= 0 || thirstSlider.value <= 0 || currentTemp <= freezingTemp || currentTemp >= heatTemp || fatigueSlider.value <=0 || staminaSlider.value <=0)
-        {
-            healthSlider.value -= Time.deltaTime / healthFallRate;
-        }
-        
-        if(healthSlider.value <= 0)
+        if (healthSlider.value <= 0)
         {
             CharacterDeath();
         }
         #endregion
 
         #region Hunger Controller
-        if (hungerSlider.value >= 0)
+        currentHunger = hungerSlider.value;
+        if (hungerSlider.value > 0)
         {
             hungerSlider.value -= Time.deltaTime * hungerFallRate * fatigueMultiplier;
+            if (isStarving)
+            {
+                isStarving = false;
+                effectMultiplier--;
+            }
         }
 
-        else if(hungerSlider.value <= 0)
+        else if (hungerSlider.value <= 0)
         {
             hungerSlider.value = 0;
+            if (!isStarving)
+            {
+                isStarving = true;
+                effectMultiplier++;
+            }
         }
 
-        else if(hungerSlider.value >= maxHunger)
+        else if (hungerSlider.value >= maxHunger)
         {
             hungerSlider.value = maxHunger;
         }
         #endregion 
 
         #region Thirst Controller
-        if (thirstSlider.value >= 0)
+        currentThirst = thirstSlider.value;
+        if (thirstSlider.value > 0)
         {
             thirstSlider.value -= Time.deltaTime * thirstFallRate * fatigueMultiplier;
+
+            if (isDehydrated)
+            {
+                isDehydrated = false;
+                effectMultiplier--;
+            }
         }
 
         else if (thirstSlider.value <= 0)
         {
             thirstSlider.value = 0;
+            if (!isDehydrated)
+            {
+                isDehydrated = true;
+                effectMultiplier++;
+            }
         }
 
         else if (thirstSlider.value >= maxThirst)
@@ -194,43 +258,91 @@ public class PlayerVitals : MonoBehaviour
         #endregion 
 
         #region Stamina Controller
-        if(characterController.velocity.magnitude > 0 && Input.GetKey(KeyCode.LeftShift))
-        {
-            staminaSlider.value -= Time.deltaTime / staminaFallRate * staminaFallMultiplier * fatigueMultiplier;
+        currentStamina = staminaSlider.value;
 
-            if(staminaSlider.value > 0)
+        #region IsOperators
+        if (staminaSlider.value > 0)
+        {
+            if (isExhausted)
             {
-                currentTemp += Time.deltaTime / 5;
+                isExhausted = false;
             }
+            playerController.m_RunSpeed = playerController.m_RunSpeedNorm;
+        }
+
+        else if (staminaSlider.value <= 0)
+        {
+            if (!isExhausted)
+            {
+                isExhausted = true;
+            }
+            staminaSlider.value = 0;
+            playerController.m_RunSpeed = playerController.m_ExhaustedSpeed;
+        }
+
+        if (characterController.velocity.magnitude > 0 && Input.GetKey(KeyCode.LeftShift) && isExhausted)
+        {
+            isRunning = false;
+            isStandingStill = false;
+            isWalking = false;
+            isExhaustedRunning = true;
+        }
+
+        else if (characterController.velocity.magnitude > 0 && Input.GetKey(KeyCode.LeftShift) && !isExhausted)
+        {
+            isRunning = true;
+            isStandingStill = false;
+            isWalking = false;
+            isExhaustedRunning = false;
+        }
+
+        else if (characterController.velocity.magnitude > 0)
+        {
+            isRunning = false;
+            isStandingStill = false;
+            isWalking = true;
+            isExhaustedRunning = false;
         }
 
         else
         {
+            isWalking = false;
+            isRunning = false;
+            isStandingStill = true;
+            isExhaustedRunning = false;
+        }
+        #endregion
+
+        if (isRunning || isExhaustedRunning)
+        {
+            staminaSlider.value -= Time.deltaTime / staminaFallRate * staminaFallMultiplier * (fatigueMultiplier / 2);
+            currentTemp += Time.deltaTime / 5;
+        }
+
+        else if (isWalking)
+        {
+            staminaSlider.value -= Time.deltaTime / staminaRegainRate * staminaRegainMultiplier * (fatigueMultiplier / 4);
+            currentTemp += Time.deltaTime / 10;
+        }
+
+        else if (isStandingStill)
+        {
             staminaSlider.value += Time.deltaTime / staminaRegainRate * staminaRegainMultiplier / (fatigueMultiplier / 2);
 
-            if(currentTemp >= normalTemp)
+            if (currentTemp >= normalTemp)
             {
                 currentTemp -= Time.deltaTime / 10;
             }
         }
 
-        if(staminaSlider.value <= 0)
-        {
-            staminaSlider.value = 0;
-            playerController.m_RunSpeed = playerController.m_ExhaustedSpeed;
-        }
-
-        else if(staminaSlider.value >= 0)
-        {
-            playerController.m_RunSpeed = playerController.m_RunSpeedNorm;
-        }
         #endregion
 
         #endregion
     }
 
-    void UpdateTemp()
+    void Update()
     {
+        currentMovementSpeed = characterController.velocity.magnitude.ToString("0");
         tempNumber.text = currentTemp.ToString("00.0");
     }
 

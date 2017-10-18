@@ -4714,6 +4714,10 @@ Prefab:
       propertyPath: m_RunSpeedNorm
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
+      propertyPath: m_ExhaustedSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
   m_IsPrefabParent: 0
@@ -5925,39 +5929,6 @@ MonoBehaviour:
   crosshair: {fileID: 1051459252}
   itemNameText: {fileID: 1331862091}
   playerVitals: {fileID: 1182829506}
---- !u!114 &1061077280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1061077278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60e318a6043c1cb4a8ce1c8805bab930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1061077281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1061077278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6d4281e5d7cd44d8c6e38bc2c1b8d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1061077282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1061077278}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd999d1b2cf94a45a5b0a47ce074bef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1061077283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5979,17 +5950,6 @@ MonoBehaviour:
     dirtTexture: {fileID: 0}
     dirtIntensity: 2.5
   m_Shader: {fileID: 4800000, guid: e45d4f28262b04d10a075856ab5fdb5e, type: 3}
---- !u!114 &1061077284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1061077278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1061077288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6624,6 +6584,7 @@ MonoBehaviour:
   healthSlider: {fileID: 471170951}
   maxHealth: 100
   healthFallRate: 20
+  effectMultiplier: 0
   thirstSlider: {fileID: 220187677}
   maxThirst: 1000
   thirstFallRate: 5
@@ -6642,11 +6603,27 @@ MonoBehaviour:
   maxFatigue: 20
   fatigueFallRate: 1
   freezingTemp: 36
-  currentTemp: 37
   normalTemp: 37
   heatTemp: 38
   tempNumber: {fileID: 523131644}
   tempBG: {fileID: 1653969610}
+  isTired: 0
+  isStarving: 0
+  isDehydrated: 0
+  isOverheating: 0
+  isFreezing: 0
+  isExhausted: 0
+  isRunning: 0
+  isStandingStill: 0
+  isWalking: 0
+  isExhaustedRunning: 0
+  currentTemp: 37
+  currentFatigue: 0
+  currentHealth: 0
+  currentHunger: 0
+  currentThirst: 0
+  currentStamina: 0
+  currentMovementSpeed: 
 --- !u!1001 &1184980982
 Prefab:
   m_ObjectHideFlags: 0
