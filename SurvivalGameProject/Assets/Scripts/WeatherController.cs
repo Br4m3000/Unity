@@ -7,7 +7,7 @@ using UnityEditor;
 public class WeatherController : MonoBehaviour {
 
     [Header("Rain Settings")]
-    public GameObject rainParent;
+    public GameObject rain;
     public bool allowRain;
 
     [Space(10)]
@@ -37,22 +37,23 @@ public class WeatherController : MonoBehaviour {
 	}
 
     public void StartRain()
-    {
-        if(!isRaining && allowRain && !rainParent.activeSelf)
+    {     
+        if(!isRaining && allowRain)
         {
             Debug.Log("Start rain");
-            rainParent.SetActive(true);
+            Instantiate(rain);
             isRaining = true;
         }
+        
     }
 
     public void StopRain()
     {
-        if (isRaining && rainParent.activeSelf)
+        if (isRaining)
         {
             Debug.Log("Stop rain");
-            rainParent.SetActive(false);
+            Destroy(GameObject.FindGameObjectWithTag("RainParent"));
             isRaining = false;
-        }
+        }        
     }   
 }

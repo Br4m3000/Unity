@@ -4150,6 +4150,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 705450285}
+  - component: {fileID: 705450286}
   m_Layer: 0
   m_Name: WeatherController
   m_TagString: Untagged
@@ -4170,6 +4171,22 @@ Transform:
   m_Father: {fileID: 130887891}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &705450286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 705450284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593697978f243f441bd2e0a68588fd29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rain: {fileID: 1870678278301460, guid: 97cee76f263dbc84f8dcbf1b28073a20, type: 2}
+  allowRain: 1
+  isRaining: 0
+  startRain: 0
+  stopRain: 0
 --- !u!1001 &705640542
 Prefab:
   m_ObjectHideFlags: 0
