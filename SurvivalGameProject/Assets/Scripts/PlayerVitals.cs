@@ -48,6 +48,11 @@ public class PlayerVitals : MonoBehaviour
     public float heatTemp;
     public Text tempNumber;
     public Image tempBG;
+
+    [Space(10)]
+    [Header("References")]
+    public CharacterController characterController;
+    public FirstPersonController playerController;
     #endregion
 
     #region Debugging
@@ -78,8 +83,8 @@ public class PlayerVitals : MonoBehaviour
     #endregion
 
     #region Controllers
-    private CharacterController characterController;
-    private FirstPersonController playerController;
+    //public CharacterController characterController;
+    //public FirstPersonController playerController;
     #endregion
 
     void Start()
@@ -111,8 +116,8 @@ public class PlayerVitals : MonoBehaviour
         #endregion
 
         #region Controllers
-        characterController = GetComponent<CharacterController>();
-        playerController = GetComponent<FirstPersonController>();
+        //characterController = GetComponent<CharacterController>();
+        //playerController = GetComponent<FirstPersonController>();
         #endregion Controllers
 
         currentMovementSpeed = characterController.velocity.magnitude.ToString("0");

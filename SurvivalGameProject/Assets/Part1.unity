@@ -555,6 +555,7 @@ Transform:
   - {fileID: 490751033}
   - {fileID: 673369961}
   - {fileID: 705450285}
+  - {fileID: 781135047}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -856,7 +857,7 @@ MonoBehaviour:
         m_MethodName: SleepButton
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1182829506}
+          m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: PlayerVitals, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -4605,6 +4606,92 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e2dd32c733005a44b50004d673dc653, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &781135046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 781135047}
+  - component: {fileID: 781135048}
+  m_Layer: 0
+  m_Name: VitalsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &781135047
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 781135046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 130887891}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &781135048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 781135046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0b11c5f4fc726409cf9cab64c86b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider: {fileID: 471170951}
+  maxHealth: 100
+  healthFallRate: 20
+  effectMultiplier: 0
+  thirstSlider: {fileID: 220187677}
+  maxThirst: 1000
+  thirstFallRate: 5
+  hungerSlider: {fileID: 870951343}
+  maxHunger: 1000
+  hungerFallRate: 2
+  staminaSlider: {fileID: 816749169}
+  normMaxStamina: 100
+  fatigueMaxStamina: 100
+  staminaFallRate: 1
+  staminaFallMultiplier: 10
+  staminaRegainRate: 1
+  staminaRegainMultiplier: 7
+  fatigueSlider: {fileID: 1592816185}
+  normFatigue: 20
+  maxFatigue: 20
+  fatigueFallRate: 1
+  freezingTemp: 36
+  normalTemp: 37
+  heatTemp: 38
+  tempNumber: {fileID: 523131644}
+  tempBG: {fileID: 1653969610}
+  characterController: {fileID: 807425052}
+  playerController: {fileID: 1182829503}
+  isTired: 0
+  isStarving: 0
+  isDehydrated: 0
+  isOverheating: 0
+  isFreezing: 0
+  isExhausted: 0
+  isRunning: 0
+  isStandingStill: 0
+  isWalking: 0
+  isExhaustedRunning: 0
+  currentTemp: 37
+  currentFatigue: 0
+  currentHealth: 0
+  currentHunger: 0
+  currentThirst: 0
+  currentStamina: 0
+  currentMovementSpeed: 
+  allowDeath: 0
 --- !u!1001 &786392736
 Prefab:
   m_ObjectHideFlags: 0
@@ -4767,6 +4854,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
   m_IsPrefabParent: 0
+--- !u!143 &807425052 stripped
+CharacterController:
+  m_PrefabParentObject: {fileID: 14300000, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 2}
+  m_PrefabInternal: {fileID: 807425051}
 --- !u!1 &816749167
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,7 +6066,7 @@ MonoBehaviour:
     m_Bits: 256
   crosshair: {fileID: 1051459252}
   itemNameText: {fileID: 1331862091}
-  playerVitals: {fileID: 1182829506}
+  playerVitals: {fileID: 0}
 --- !u!114 &1061077283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6606,71 +6698,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aae542b8a65f39b49b008fa689ce9804, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1182829500 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
-  m_PrefabInternal: {fileID: 807425051}
 --- !u!114 &1182829503 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0,
     type: 2}
   m_PrefabInternal: {fileID: 807425051}
   m_Script: {fileID: 11500000, guid: 05ec5cf00ca181d45a42ba1870e148c3, type: 3}
---- !u!114 &1182829506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1182829500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc0b11c5f4fc726409cf9cab64c86b9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthSlider: {fileID: 471170951}
-  maxHealth: 100
-  healthFallRate: 20
-  effectMultiplier: 0
-  thirstSlider: {fileID: 220187677}
-  maxThirst: 1000
-  thirstFallRate: 5
-  hungerSlider: {fileID: 870951343}
-  maxHunger: 1000
-  hungerFallRate: 2
-  staminaSlider: {fileID: 816749169}
-  normMaxStamina: 100
-  fatigueMaxStamina: 100
-  staminaFallRate: 1
-  staminaFallMultiplier: 10
-  staminaRegainRate: 1
-  staminaRegainMultiplier: 7
-  fatigueSlider: {fileID: 1592816185}
-  normFatigue: 20
-  maxFatigue: 20
-  fatigueFallRate: 1
-  freezingTemp: 36
-  normalTemp: 37
-  heatTemp: 38
-  tempNumber: {fileID: 523131644}
-  tempBG: {fileID: 1653969610}
-  isTired: 0
-  isStarving: 0
-  isDehydrated: 0
-  isOverheating: 0
-  isFreezing: 0
-  isExhausted: 0
-  isRunning: 0
-  isStandingStill: 0
-  isWalking: 0
-  isExhaustedRunning: 0
-  currentTemp: 37
-  currentFatigue: 0
-  currentHealth: 0
-  currentHunger: 0
-  currentThirst: 0
-  currentStamina: 0
-  currentMovementSpeed: 
-  allowDeath: 0
 --- !u!1001 &1184980982
 Prefab:
   m_ObjectHideFlags: 0
